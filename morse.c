@@ -63,32 +63,39 @@ const char* encode(char c) {
 	return "";
 }
 
+int DOT_LEN = 100;
+
 void output(char* c) {
 	for (char* ptr = c; *ptr; ptr++) {
 		if (*ptr == '-') {
 			printf("255\n");
 			fflush(stdout);
-			msleep(500);
+			msleep(DOT_LEN*3);
 			printf("0\n");
 			fflush(stdout);
 		}
 		if (*ptr == '.') {
 			printf("255\n");
 			fflush(stdout);
-			msleep(200);
+			msleep(DOT_LEN);
 			printf("0\n");
 			fflush(stdout);
 		}
-		msleep(200);
+		msleep(DOT_LEN);
 	}
-	msleep(900);
+	msleep(DOT_LEN*3);
 }
 
 int main(void) {
 	while (1) {
 		char c = getc(stdin);
+		if (c == EOF)
+			return 0;
+		if (c == '\n') {
+			msleep(DOT_LEN*9);
+		}
 		if (c == ' ') {
-			msleep(1000);
+			msleep(DOT_LEN*9);
 		}
 		output(encode(c));
 	}
